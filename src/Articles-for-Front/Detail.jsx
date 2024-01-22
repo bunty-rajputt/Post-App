@@ -3,8 +3,9 @@ import React from 'react';
 import { useLocation, } from 'react-router-dom';
 
 const Detail = () => {
-  const {state} =useLocation()
-
+  const {state} =useLocation();
+ console.log(state,"new---")
+  
   return (
     <div>
      <div className="container">
@@ -12,15 +13,17 @@ const Detail = () => {
             <div className="col-md-12">
               <div className="card my-3">
                  <div className="card-body">
-                <h2 className="card-title">{state.title}</h2>
-                <p className="card-text">{state.body}</p>
-                <p className="card-text">{state.id}</p>
-                <p className="card-text">{state.userId}</p>
+                <h2 className="card-title">{state.key.title}</h2>
+                <p className="card-text">{state.key.body}</p>
+                <p className="card-text">{state.key.id}</p> 
+                 <p className="card-text">{state.key.userId}</p>
+                <p>{state.key2}</p>
                  </div>
               </div>
             </div>
          </div>
          </div>
+        
     </div>
   );
 };

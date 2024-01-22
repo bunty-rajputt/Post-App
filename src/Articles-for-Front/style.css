@@ -1,8 +1,15 @@
+ body{
+   font-family: 'Shantell Sans', cursive;
+ }
+ 
  /* navbar strt here */
  .Navbar-section .navbar .logo{
     margin-bottom: 14px;
     width: 60px;
  } 
+ .Navbar-section .navbar .nav-item .nav-link{
+   color: grey;
+ }
  .Navbar-section .navbar .nav-item .nav-link:hover{
    color: rgb(87, 184, 87);
  }
@@ -43,4 +50,13 @@
  .banner-heading h1 span{
     color: rgb(87, 184, 87);
  }
- 
+ /* listing start here */
+ .card .read-more{
+   color: rgb(58, 129, 58);;
+   font-style: italic;
+   margin-left: 10px;
+ }
+ .card .read-more:hover{
+   cursor: pointer;
+   color: rgb(87, 184, 87);
+ }
