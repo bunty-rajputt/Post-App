@@ -51,12 +51,13 @@
     color: rgb(87, 184, 87);
  }
  /* listing start here */
- .card .read-more{
+ .card .read-more a{
    color: rgb(58, 129, 58);;
    font-style: italic;
    margin-left: 10px;
+   text-decoration: none;
  }
- .card .read-more:hover{
+ .card .read-more a:hover{
    cursor: pointer;
    color: rgb(87, 184, 87);
  }

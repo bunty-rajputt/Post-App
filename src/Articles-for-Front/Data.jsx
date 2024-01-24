@@ -1,6 +1,4 @@
-import { useNavigate } from "react-router-dom";
-import  './style.css';
-const Data = () => {
+
 
 
   let data = [
@@ -606,37 +604,4 @@ const Data = () => {
     }
   ]
 
-  const student=['ali',"hanan",'manan']
-  const navigate = useNavigate();
-
-  const handleClick = ((data) => {
-    if (data) {
-      navigate(`/Detail/${data.id}`, {state:{ key:data ,key2:student}});
-      localStorage.setItem("Data", JSON.stringify(data))
-    }
-  })
-  return (
-    <>
-      {data.map((list, index) => (
-        <div className="container" key={index}>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="card my-3">
-                <div className="card-header">
-                  <h5 className="card-title">{list.title}</h5>
-                </div>
-                <div className="card-body">
-                  <p className="card-text">{list.body}{/* Use Link to navigate to BlogDetail */}
-                <span className="read-more" onClick={() => handleClick(list)} >Read More ...</span></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-      </>
-  );
-  
-}
-
-export default Data;
+export default data;

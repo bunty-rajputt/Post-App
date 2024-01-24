@@ -1,5 +1,5 @@
 import React from 'react';
-import  Banner  from './Articles-for-Front/Articles'; 
+import  {Banner}  from './Articles-for-Front/Articles'; 
 import { Nav } from './Articles-for-Front/Nav';
 import { Routes,Route } from 'react-router-dom';
 import Detail from './Articles-for-Front/Detail';
@@ -8,10 +8,10 @@ import Detail from './Articles-for-Front/Detail';
 const App = () => {
   return (
     <>
-          <Nav/>      
+      <Nav/>      
       <Routes>
         <Route path='/' element={<Banner/>}/>
-        <Route path="/Detail/:id" element={<Detail />} />
+        <Route path="/readmore/:id" element={<Detail />} />
       </Routes>
       
     </>
