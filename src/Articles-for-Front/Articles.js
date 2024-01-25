@@ -3,12 +3,30 @@ import Baners from "../Images/Banner.png";
 // import { useNavigate } from "react-router-dom";
 import  { useState } from 'react';
 import { Link } from 'react-router-dom';
-import data from './Data'
+import axios from 'axios';
+import React, { useEffect } from 'react';
+// import data from './Data'
 export const Banner = () => {
-  const [post,setPost]=useState(data);
+  // const [post,setPost]=useState(data);
+  
+
+  // axios calling data
+  const [data, setData] = useState([]);
+
+
+  useEffect(() => {
+    axios.get("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+ //add post
   const handleadd=() => {
     const newPost={id:101,title:"new",body:"new post"}
-    setPost( [...post, newPost]);
+    setData( [...data, newPost]);
   }
   // const navigate = useNavigate();
 
@@ -22,8 +40,8 @@ export const Banner = () => {
     const Delete = window.confirm('Are you sure you want to delete this post?');
     if(Delete){
       console.log(id)
-      const update=post.filter(post =>post.id !==id)
-      setPost(update)
+      const update=data.filter(post =>post.id !==id)
+      setData(update)
       console.log(update)
     }
   
@@ -45,7 +63,7 @@ export const Banner = () => {
 
       <button onClick={handleadd}>Add New Post</button>
     </div>
-      {post.map((list) => {
+      {data.map((list) => {
       
         return(
       <div className="container" key={list.id}>
