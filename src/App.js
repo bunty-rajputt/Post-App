@@ -3,6 +3,7 @@ import  {Banner}  from './Articles-for-Front/Articles';
 import { Nav } from './Articles-for-Front/Nav';
 import { Routes,Route } from 'react-router-dom';
 import Detail from './Articles-for-Front/Detail';
+import Fetch from './Articles-for-Front/Fetch';
 
 
 const App = () => {
@@ -13,7 +14,8 @@ const App = () => {
         <Route path='/' element={<Banner/>}/>
         <Route path="/readmore/:id" element={<Detail />} />
       </Routes>
-      
+      <Fetch/>
+   
     </>
   );
 };

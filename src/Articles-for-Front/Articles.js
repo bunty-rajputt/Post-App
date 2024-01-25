@@ -19,10 +19,14 @@ export const Banner = () => {
   //   }
   // })
   const handledelete =(id)=>{
-  console.log(id)
-    const update=post.filter(post =>post.id !==id)
-    setPost(update)
-    console.log(update)
+    const Delete = window.confirm('Are you sure you want to delete this post?');
+    if(Delete){
+      console.log(id)
+      const update=post.filter(post =>post.id !==id)
+      setPost(update)
+      console.log(update)
+    }
+  
   }
 
   return (
