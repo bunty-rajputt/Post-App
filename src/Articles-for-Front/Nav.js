@@ -35,7 +35,7 @@ export const Nav = () => {
                         </ul>
                         <div className="d-flex nav-right ">
                             <h3 className='ml-5'>blog <i className="fa-solid fa-message"></i></h3>
-                            <button className="btn btn-outline-success" type="submit">
+                            <button className="btn green-btn btn-outline-success" type="submit">
                                 Planner<i className="fa fa-leaf" aria-hidden="true"></i>
                             </button>
                         </div>

@@ -23,7 +23,7 @@
     color: rgb(87, 184, 87);
     size: 10;
  }
- .Navbar-section .navbar .nav-right button{
+ .green-btn{
     background-color: rgb(87, 184, 87);
     color: white;
     border-radius: 40px;
@@ -61,3 +61,38 @@
    cursor: pointer;
    color: rgb(87, 184, 87);
  }
+ /* seen button effect */
+ .red {
+   background-color: red;
+   color: white;
+   padding: 10px 20px;
+   cursor: pointer;
+ }
+ 
+ .green {
+   background-color: green;
+   color: white;
+   padding: 10px 20px;
+   cursor: pointer;
+ }
+/* loader css */
+ .loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Optional: Adjust the height based on your needs */
+}
+
+/* addd buttton */
+.add-btn{
+  background-color: rgb(87, 184, 87);
+    color: white;
+    border-radius: 10px;
+    border: none;
+    text-decoration: none;
+}
+.add-btn:hover{
+ color: white;
+}
+
+
