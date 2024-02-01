@@ -5,7 +5,6 @@ import axios from 'axios';
 const AddButton = () => {
   const [newPost, setNewPost] = useState({ title: '', body: '' ,id:'',});
   const [data, setData] = useState([]);
-  const [isFormOpen, setIsFormOpen] = useState(true);
 
  
 
@@ -18,27 +17,40 @@ const AddButton = () => {
   };
 
   const handleFormSubmit = (e) => {
-    e.preventDefault(); // Prevents the default form submission behavior
-        // Fetch details for the specific post ID
-         axios.post(`https://jsonplaceholder.typicode.com/posts`)
-           .then((response) => {
-            console.log(response,"responce -----------")
-             if (response.ok) {
-                return response.jason()
-             }
+    e.preventDefault(); 
+    if (newPost.title.length<=5) {
+      alert("Title must bi written 5 character ")
+      return;
+     }
+     if (newPost.body.length<=5) {
+      alert("Minimum length of body 5 character ")
+      return;
+     }
+     if (newPost.body.length >= 500 ) {
+      alert("Maximum length of body 500 character")
+      return;
+     }else{
+      alert("form is submit successfully")
+     }
+    axios.post(`https://jsonplaceholder.typicode.com/posts`)
+    .then((response) => {
+     console.log(response,"responce -----------")
+      if (response.ok) {
+         return response.jason()
+      }   
            })
-           
-       ;
+  // add new post data to state
     const newPostItem = { ...newPost, id: data.length + 1 };
     setData([...data, newPostItem]);
-    setIsFormOpen(false);
+    // clear states to the add post data
+    setNewPost({ title: '', body: '', id: '' });
+
   };
 
   return (
     <>
       <div className="container">
         <div>
-          {isFormOpen && (
             <div className="container">
               <div className="row">
                 <div className="col-md-12">
@@ -95,7 +107,7 @@ const AddButton = () => {
                 </div>
               </div>
             </div>
-          )}
+        
         </div>
       </div>
     </>

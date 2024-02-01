@@ -25,15 +25,15 @@ export const Banner = () => {
     fetchData()
   }, []);
 
+  
  
   // delete post 
   const handleDelete = (id) => {
     axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
       .then((response) => {
         console.log('Post deleted successfully', response);
-        const update = data.filter(post => post.id !== id);
+               const update = data.filter(post => post.id !== id);
         setData(update);
-        console.log(update);
       })
       .catch((error) => {
         console.error('Error deleting post', error);
@@ -61,7 +61,7 @@ export const Banner = () => {
           <span className="visually-hidden">Loading...</span>
         </div>
       </div>) : (
-        data.map((post) => {
+        data.map((post,index) => {
           return (
             <div className="container" key={post.id}>
               <div className="row">
@@ -73,7 +73,7 @@ export const Banner = () => {
                     <div className="card-body">
                       <p className='card-text'>{post.body}<span className='read-more'><Link to={`/readmore/${post.id}`}>Read More.......</Link></span></p>
                       {/* Button trigger modal  */}
-                      <button type="button" className="green-btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <button type="button"  className="green-btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Delete
                       </button>
 
