@@ -3,8 +3,9 @@ import './style.css';
 import axios from 'axios';
 
 const AddButton = () => {
-  const [newPost, setNewPost] = useState({ title: '', body: '' ,id:'',});
+  const [newPost, setNewPost] = useState({userId:'', title: '', body: '' });
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState([]);
 
  
 
@@ -18,11 +19,11 @@ const AddButton = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault(); 
-    if (newPost.title.length<=5) {
+    if (newPost.title.length<5) {
       alert("Title must bi written 5 character ")
       return;
      }
-     if (newPost.body.length<=5) {
+     if (newPost.body.length<5) {
       alert("Minimum length of body 5 character ")
       return;
      }
@@ -32,44 +33,52 @@ const AddButton = () => {
      }else{
       alert("form is submit successfully")
      }
-    axios.post(`https://jsonplaceholder.typicode.com/posts`)
+    axios.post(`https://jsonplaceholder.typicode.com/posts`, {newPost})
     .then((response) => {
      console.log(response,"responce -----------")
       if (response.ok) {
          return response.jason()
       }   
-           })
+    })
+    .catch((error)=>{
+      console.log(error,'error------')
+    })
+
   // add new post data to state
     const newPostItem = { ...newPost, id: data.length + 1 };
     setData([...data, newPostItem]);
     // clear states to the add post data
-    setNewPost({ title: '', body: '', id: '' });
+    setNewPost({ title: '', body: '', userId: '' });
 
   };
 
   return (
     <>
-      <div className="container">
+    {isLoading ? (<div className="loader-container">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>) :( <div className="container">
         <div>
-            <div className="container">
+            <div className="container shadow">
               <div className="row">
                 <div className="col-md-12">
                   <div className="card my-3">
                     <div className="card-header">
-                      <h5 className="card-title">Add New Post</h5>
+                      <h5 className="card-title ">Add New Post</h5>
                     </div>
                     <div className="card-body">
                       <form onSubmit={handleFormSubmit}>
                       <div className="mb-3">
                           <label htmlFor="postTitle" className="form-label">
-                            Id
+                            UserId
                           </label>
                           <input
                             type="number"
                             className="form-control"
                             id="postid"
-                            name="id"
-                            value={newPost.id}
+                            name="userId"
+                            value={newPost.userId}
                             onChange={handleFormChange}
                           />
                         </div>
@@ -109,7 +118,7 @@ const AddButton = () => {
             </div>
         
         </div>
-      </div>
+      </div>)}
     </>
   );
 };

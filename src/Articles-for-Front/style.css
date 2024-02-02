@@ -11,8 +11,8 @@
    color: grey;
  }
  .Navbar-section .navbar .nav-item .nav-link:hover{
-   color: rgb(87, 184, 87);
- }
+  color: rgb(87, 184, 87);
+}
  .Navbar-section .navbar .nav-right h3{
     font-weight: 800;
     font-size: 20px;
@@ -37,10 +37,10 @@
 
 /* Banner strt here */
 
-.banner .banner-img{
-    margin-bottom: 40px;
-}
 
+.banner-heading{
+  margin-top: 50px;
+}
 .banner-heading h1{
     font-weight: 800;
 }
@@ -51,30 +51,24 @@
     color: rgb(87, 184, 87);
  }
  /* listing start here */
+ .card .card-title{
+   color: rgb(87, 184, 87);
+
+ }
  .card .read-more a{
-   color: rgb(58, 129, 58);;
+   color: rgb(87, 184, 87);
    font-style: italic;
    margin-left: 10px;
    text-decoration: none;
  }
  .card .read-more a:hover{
-   cursor: pointer;
-   color: rgb(87, 184, 87);
- }
- /* seen button effect */
- .red {
-   background-color: red;
-   color: white;
-   padding: 10px 20px;
+  color: rgb(58, 129, 58);
    cursor: pointer;
  }
- 
- .green {
-   background-color: green;
-   color: white;
-   padding: 10px 20px;
-   cursor: pointer;
- }
+/* hover effect on list */
+.post-list:hover{
+   background-color: #ffc7c7;
+}
 /* loader css */
  .loader-container {
   display: flex;
@@ -88,11 +82,16 @@
   background-color: rgb(87, 184, 87);
     color: white;
     border-radius: 10px;
+    padding: 5px;
     border: none;
     text-decoration: none;
 }
 .add-btn:hover{
  color: white;
-}
+ 
+  background-color: rgb(58, 129, 58);;
+
+ }
+
 
 

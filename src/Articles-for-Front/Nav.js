@@ -16,9 +16,9 @@ export const Nav = () => {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <NavLink href="/" className="nav-link active work">
+                                <a href="/" className="nav-link active work">
                                 Work <i className="fa fa-shopping-bag" aria-hidden="true"/>
-                                </NavLink>
+                                </a>
                             </li>
                             <li className="nav-item">
                                 <NavLink href="/" className="nav-link">
