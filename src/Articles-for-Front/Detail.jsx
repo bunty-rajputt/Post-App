@@ -14,7 +14,7 @@ const Detail = () => {
   useEffect(() => {
     // Fetch details for the specific post ID
     axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then((response) => {
+      .then((response) => {         
         setIsLoading(true);
         setData(response.data);
         setEditedData({ title: response.data.title, body: response.data.body, userId: response.data.userId,id: response.data.id });
@@ -97,7 +97,7 @@ const Detail = () => {
                           onChange={handleInputChange}
                         />
                       </div>
-                      <button className="btn btn-primary" onClick={handleSave}>Save</button>
+                      <button className="btn green-btn" onClick={handleSave}>Save</button>
                     </>
                   ) : (
                     <>

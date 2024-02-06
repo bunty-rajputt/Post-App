@@ -68,17 +68,15 @@ export const Banner = () => {
                     </div>
                     <div className='card-body'>
                       <p className='card-text'>{post.body}<span className='read-more'><Link to={`/readmore/${post.id}`}>Read More.......</Link></span></p>
-                      <button type="button"  className="green-btn " onClick={()=> handleDelete(post.id)}>
-                      Delete
-                             </button>
+                      
 
                       {/* Button trigger modal  */}
-                      {/* <button type="button"   className="green-btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <button type="button"   className="green-btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Delete
-                      </button> */}
+                      </button>
 
                       {/* Modal */}
-                      {/* <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                           <div className="modal-content">
                             <div className="modal-header">
@@ -89,14 +87,14 @@ export const Banner = () => {
                               Are you sure you want to delete this post!
                             </div>
                             <div className="modal-footer">
+                              <button type="button" className="green-btn bg-danger" data-bs-dismiss="modal">Close</button>
                               <button type="button"  className="green-btn " onClick={()=> handleDelete(post.id)}   data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Delete
                              </button>
-                              <button type="button" className="green-btn bg-danger" data-bs-dismiss="modal">Close</button>
                             </div>
                           </div>
                         </div>
-                      </div> */}
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -5,7 +5,7 @@ import axios from 'axios';
 const AddButton = () => {
   const [newPost, setNewPost] = useState({userId:'', title: '', body: '' });
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
  
 
@@ -33,22 +33,27 @@ const AddButton = () => {
      }else{
       alert("form is submit successfully")
      }
+     setIsLoading(true);
     axios.post(`https://jsonplaceholder.typicode.com/posts`, {newPost})
     .then((response) => {
      console.log(response,"responce -----------")
       if (response.ok) {
          return response.jason()
+         
       }   
-    })
-    .catch((error)=>{
-      console.log(error,'error------')
-    })
-
-  // add new post data to state
+        // add new post data to state
     const newPostItem = { ...newPost, id: data.length + 1 };
     setData([...data, newPostItem]);
     // clear states to the add post data
     setNewPost({ title: '', body: '', userId: '' });
+    })
+    
+    .catch((error)=>{
+      console.log(error,'error------')
+    })
+    .finally(()=>{
+      setIsLoading(false);
+    })
 
   };
 
