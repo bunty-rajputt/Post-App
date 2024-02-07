@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import HandleButton from './HandleButton';
 
 const Detail = () => {
   const [data, setData] = useState(null);
@@ -10,6 +11,8 @@ const Detail = () => {
   const [editedData, setEditedData] = useState({ title: '', body: '', userId: '',id:'' });
 
   let { id } = useParams();
+  
+
 
   useEffect(() => {
     // Fetch details for the specific post ID
@@ -45,6 +48,7 @@ const Detail = () => {
 
   return (
     <div>
+     <HandleButton/>
       {isLoading ? (
         <div className="container">
           <div className="row">
@@ -53,6 +57,7 @@ const Detail = () => {
                 <div className="card-body">
                   {isEditing ? (
                     <>
+                    
                       <h2>Edit Post</h2>
                       <div className="mb-3">
                         <label htmlFor="editedTitle" className="form-label">Title:</label>

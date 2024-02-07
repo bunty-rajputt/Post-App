@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import './style.css';
 import axios from 'axios';
+import HandleButton from './HandleButton';
 
 const AddButton = () => {
-  const [newPost, setNewPost] = useState({userId:'', title: '', body: '' });
+  const [newPost, setNewPost] = useState({ userId: '', title: '', body: '' });
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({ userId: '', title: '', body: '' });
+  const [isSubmissionSuccessful, setIsSubmissionSuccessful] = useState(false);
 
- 
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -15,77 +17,105 @@ const AddButton = () => {
       ...prevPost,
       [name]: value,
     }));
+    // Clear error message when user starts typing
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: '',
+    }));
   };
 
   const handleFormSubmit = (e) => {
-    e.preventDefault(); 
-    if (newPost.title.length<5) {
-      alert("Title must bi written 5 character ")
-      return;
-     }
-     if (newPost.body.length<5) {
-      alert("Minimum length of body 5 character ")
-      return;
-     }
-     if (newPost.body.length >= 500 ) {
-      alert("Maximum length of body 500 character")
-      return;
-     }else{
-      alert("form is submit successfully")
-     }
-     setIsLoading(true);
-    axios.post(`https://jsonplaceholder.typicode.com/posts`, {newPost})
-    .then((response) => {
-     console.log(response,"responce -----------")
-      if (response.ok) {
-         return response.jason()
-         
-      }   
-        // add new post data to state
-    const newPostItem = { ...newPost, id: data.length + 1 };
-    setData([...data, newPostItem]);
-    // clear states to the add post data
-    setNewPost({ title: '', body: '', userId: '' });
-    })
-    
-    .catch((error)=>{
-      console.log(error,'error------')
-    })
-    .finally(()=>{
-      setIsLoading(false);
-    })
+    e.preventDefault();
+    const newErrors = { userId: '', title: '', body: '' };
 
+    if (!newPost.userId) {
+      newErrors.userId = 'User ID is required.';
+    }
+
+    if (newPost.title.length < 5) {
+      newErrors.title = 'Title must be at least 5 characters.';
+    }
+
+    if (newPost.body.length < 5) {
+      newErrors.body = 'Minimum length of body is 5 characters.';
+    } else if (newPost.body.length >= 500) {
+      newErrors.body = 'Maximum length of body is 500 characters.';
+    }
+
+    // Check if there are any errors
+    if (Object.values(newErrors).some((error) => error !== '')) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // If no errors, proceed with form submission
+    setIsLoading(true);
+
+    axios
+      .post(`https://jsonplaceholder.typicode.com/posts`, { newPost })
+      .then((response) => {
+        console.log(response, 'response -----------');
+        // Assuming response contains relevant information
+        if (response.data) {
+          // Add new post data to state
+          const newPostItem = { ...newPost, id: data.length + 1 };
+          setData([...data, newPostItem]);
+          // Clear states for the added post data
+          setNewPost({ title: '', body: '', userId: '' });
+          setIsSubmissionSuccessful(true); // Set the success flag
+
+        } else {
+          console.error('Failed to add post:', response);
+          // Handle the error case
+        }
+      })
+      .catch((error) => {
+        console.error('Error adding post:', error);
+        // Handle the error case
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
     <>
-    {isLoading ? (<div className="loader-container">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <HandleButton />
+      {isLoading ? (
+        <div className="loader-container">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         </div>
-      </div>) :( <div className="container">
-        <div>
+      ) : (
+        <div className="container">
+          <div>
             <div className="container shadow">
               <div className="row">
                 <div className="col-md-12">
                   <div className="card my-3">
                     <div className="card-header">
-                      <h5 className="card-title ">Add New Post</h5>
+                      <h5 className="card-title">Add New Post</h5>
                     </div>
                     <div className="card-body">
                       <form onSubmit={handleFormSubmit}>
-                      <div className="mb-3">
-                          <label htmlFor="postTitle" className="form-label">
-                            UserId
+                        <div className="mb-3">
+                          <label htmlFor="postid" className="form-label">
+                            User ID
                           </label>
                           <input
                             type="number"
-                            className="form-control"
+                            className={`form-control ${
+                              errors.userId ? 'is-invalid' : ''
+                            }`}
                             id="postid"
                             name="userId"
                             value={newPost.userId}
                             onChange={handleFormChange}
                           />
+                          {errors.userId && (
+                            <div className="invalid-feedback">{errors.userId}</div>
+                          )}
                         </div>
                         <div className="mb-3">
                           <label htmlFor="postTitle" className="form-label">
@@ -93,24 +123,34 @@ const AddButton = () => {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${
+                              errors.title ? 'is-invalid' : ''
+                            }`}
                             id="postTitle"
                             name="title"
                             value={newPost.title}
                             onChange={handleFormChange}
                           />
+                          {errors.title && (
+                            <div className="invalid-feedback">{errors.title}</div>
+                          )}
                         </div>
                         <div className="mb-3">
                           <label htmlFor="postBody" className="form-label">
                             Body
                           </label>
                           <textarea
-                            className="form-control"
+                            className={`form-control ${
+                              errors.body ? 'is-invalid' : ''
+                            }`}
                             id="postBody"
                             name="body"
                             value={newPost.body}
                             onChange={handleFormChange}
                           ></textarea>
+                          {errors.body && (
+                            <div className="invalid-feedback">{errors.body}</div>
+                          )}
                         </div>
                         <button type="submit" className="green-btn">
                           Submit
@@ -121,9 +161,14 @@ const AddButton = () => {
                 </div>
               </div>
             </div>
-        
+          </div>
         </div>
-      </div>)}
+      )}
+      {isSubmissionSuccessful && (
+        <div className="alert alert-success mt-3" role="alert">
+          Post submitted successfully!
+        </div>
+      )}
     </>
   );
 };

@@ -4,16 +4,23 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import React, { useEffect } from 'react';
-
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+const REACT_APP_API_KEY = "https://jsonplaceholder.typicode.com/posts";
 export const Banner = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
+  const apiKey = process.env.REACT_APP_API_KEY;
+  const [selectedPost, setSelectedPost] = useState()
+
 
   // calling data to placeholder through axios
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const result = await axios.get("https://jsonplaceholder.typicode.com/posts")
+      const result = await axios.get(REACT_APP_API_KEY)
+
       if (result.status === 200) {
         const post = result.data;
         setData(post)
@@ -24,8 +31,9 @@ export const Banner = () => {
     }
     fetchData()
   }, []);
-   // delete post 
-   const handleDelete = (id) => {
+  // delete post 
+  const handleDelete = (id) => {
+    console.log(id, "checkid")
     axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
       .then((response) => {
         console.log('Post deleted successfully', response);
@@ -36,7 +44,7 @@ export const Banner = () => {
         console.error('Error deleting post', error);
       });
 
-    }
+  }
   return (
     <div className='container'>
       <div className='row banner'>
@@ -48,8 +56,8 @@ export const Banner = () => {
           <img src={Baners} className='img-fluid' style={{ width: "" }} alt="Banner" />
         </div>
       </div>
-      <div>
-        <Link className='add-btn' to={`/add`}>Add post</Link>
+      <div className='Add'>
+        <Link className='add-btn' to={`/add`}><Button style={{ color: "white" }} startIcon={<AddIcon />}>Add Post</Button></Link>
         {/* Render your existing posts here */}
       </div>
       {isLoading ? (<div className="loader-container">
@@ -57,7 +65,7 @@ export const Banner = () => {
           <span className="visually-hidden">Loading...</span>
         </div>
       </div>) : (
-        data.map((post) => {
+        <>{data.map((post) => {
           return (
             <div className="container " key={post.id}>
               <div className="row">
@@ -68,40 +76,40 @@ export const Banner = () => {
                     </div>
                     <div className='card-body'>
                       <p className='card-text'>{post.body}<span className='read-more'><Link to={`/readmore/${post.id}`}>Read More.......</Link></span></p>
-                      
+
 
                       {/* Button trigger modal  */}
-                      <button type="button"   className="green-btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <Button className='delete-btn' onClick={() => setSelectedPost(post.id)} startIcon={<DeleteIcon />} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Delete
-                      </button>
-
-                      {/* Modal */}
-                      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog">
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <h5 className="modal-title" id="exampleModalLabel">Delete post</h5>
-                              <button type="button" className="green-btn bg-danger" data-bs-dismiss="modal" aria-label="Close">X</button>
-                            </div>
-                            <div className="modal-body">
-                              Are you sure you want to delete this post!
-                            </div>
-                            <div className="modal-footer">
-                              <button type="button" className="green-btn bg-danger" data-bs-dismiss="modal">Close</button>
-                              <button type="button"  className="green-btn " onClick={()=> handleDelete(post.id)}   data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Delete
-                             </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      </Button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            )
-        })
+          )
+        })}
+          {/* Modal */}
+          <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">Delete post</h5>
+                  <button type="button" className="green-btn bg-danger" data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <div className="modal-body">
+                  Are you sure you want to delete this post!
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="green-btn bg-danger" data-bs-dismiss="modal">Close</button>
+                  <button type="button" className="green-btn " onClick={() => handleDelete(selectedPost)} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

@@ -29,6 +29,9 @@
     border-radius: 40px;
     border: none;
  }
+ .green-btn:hover{
+   background-color: rgb(58, 129, 58);;
+ }
  .Navbar-section{
     margin-bottom: 70px;
  }
@@ -65,6 +68,16 @@
   color: rgb(58, 129, 58);
    cursor: pointer;
  }
+ /* .delete-btn strt here */
+ .card-body .delete-btn{
+  background-color: rgb(87, 184, 87);
+  color: white;
+  border-radius: 10px;
+  border: none;
+ }
+ .card-body .delete-btn:hover{
+  background-color: rgb(58, 129, 58);;
+}
 /* hover effect on list */
 .post-list:hover{
    background-color: #ffc7c7;
@@ -78,20 +91,34 @@
 }
 
 /* addd buttton */
-.add-btn{
-  background-color: rgb(87, 184, 87);
-    color: white;
-    border-radius: 10px;
-    padding: 5px;
-    border: none;
-    text-decoration: none;
-}
-.add-btn:hover{
+.Add .add-btn{
+
+    background-color: rgb(87, 184, 87);
+      color: white;
+      border-radius: 10px;
+      padding: 5px;
+      border: none;
+      text-decoration: none;
+  }
+  
+  
+
+.Add .add-btn:hover{
  color: white;
- 
   background-color: rgb(58, 129, 58);;
 
  }
+/* handle prev and next button */
 
-
-
+.handle-button{
+  border: none;
+  color: black;
+  
+}
+.handle-button:hover{
+  cursor: pointer;
+  
+}
+.buttons{
+  margin-left: 100px;
+}
