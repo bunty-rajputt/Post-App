@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './style.css';
 import axios from 'axios';
 import HandleButton from './HandleButton';
@@ -9,15 +9,34 @@ const AddButton = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({ userId: '', title: '', body: '' });
   const [isSubmissionSuccessful, setIsSubmissionSuccessful] = useState(false);
-
+  const [bodyCharacterCount, setBodyCharacterCount] = useState(0);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
+
+    // Validate numeric input for "userId"
+    if (name === 'userId' && (!/^\d+$/.test(value) || value <= 0)) {
+      // If the input is not a positive integer, don't update the state
+      return;
+    }
+
+    // Validate if 'e' character is present in "userId"
+    if (name === 'userId' && value.includes('e')) {
+      // If 'e' character is present, don't update the state
+      return;
+    }
+
     setNewPost((prevPost) => ({
       ...prevPost,
       [name]: value,
     }));
-    // Clear error message when user starts typing
+
+    // Update character count for the body input
+    if (name === 'body') {
+      setBodyCharacterCount(value.length);
+    }
+
+    // Clear error message when the user starts typing
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: '',
@@ -105,9 +124,7 @@ const AddButton = () => {
                           </label>
                           <input
                             type="number"
-                            className={`form-control ${
-                              errors.userId ? 'is-invalid' : ''
-                            }`}
+                            className={`form-control ${errors.userId ? 'is-invalid' : ''}`}
                             id="postid"
                             name="userId"
                             value={newPost.userId}
@@ -123,9 +140,7 @@ const AddButton = () => {
                           </label>
                           <input
                             type="text"
-                            className={`form-control ${
-                              errors.title ? 'is-invalid' : ''
-                            }`}
+                            className={`form-control ${errors.title ? 'is-invalid' : ''}`}
                             id="postTitle"
                             name="title"
                             value={newPost.title}
@@ -140,9 +155,7 @@ const AddButton = () => {
                             Body
                           </label>
                           <textarea
-                            className={`form-control ${
-                              errors.body ? 'is-invalid' : ''
-                            }`}
+                            className={`form-control ${errors.body ? 'is-invalid' : ''}`}
                             id="postBody"
                             name="body"
                             value={newPost.body}
@@ -151,6 +164,9 @@ const AddButton = () => {
                           {errors.body && (
                             <div className="invalid-feedback">{errors.body}</div>
                           )}
+                          <small className="text-muted">
+                            Character Count: {bodyCharacterCount}/500
+                          </small>
                         </div>
                         <button type="submit" className="green-btn">
                           Submit
