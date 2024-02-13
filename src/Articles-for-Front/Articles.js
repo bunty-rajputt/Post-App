@@ -8,6 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
+import EditIcon from '@mui/icons-material/Edit';
 import MenuItem from '@mui/material/MenuItem';
 
 export const Banner = () => {
@@ -29,7 +30,7 @@ export const Banner = () => {
 
         if (result.status === 200) {
           const posts = result.data;
-          setData(posts);
+          setData((prevData) => [...prevData, ...posts]); // Concatenate new posts to existing data
         } else {
           console.error('Error fetching data:', result.statusText);
         }
@@ -79,6 +80,7 @@ export const Banner = () => {
         <Link className='add-btn' to={`/add`}><Button style={{ color: "white" }} startIcon={<AddIcon />}>Add Post</Button></Link>
         {/* Render your existing posts here */}
       </div>
+    
       {isLoading ? (<div className="loader-container">
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
@@ -101,6 +103,9 @@ export const Banner = () => {
                       <Button className='delete-btn' onClick={() => setSelectedPost(post.id)} startIcon={<DeleteIcon />} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Delete
                       </Button>
+                      <Link type='btn' className=' edit-button' to={`/edit/${post.id}`}><Button className='text-white' startIcon={<EditIcon/>}>
+                        Edit Post
+                      </Button></Link>
                     </div>
                   </div>
                 </div>
@@ -142,6 +147,8 @@ export const Banner = () => {
           <MenuItem value={5}>5</MenuItem>
           <MenuItem value={10}>10</MenuItem>
           <MenuItem value={20}>20</MenuItem>
+          <MenuItem value={50}>50</MenuItem>
+          <MenuItem value={100}>100</MenuItem>
         </Select>
       </div>
     </div>

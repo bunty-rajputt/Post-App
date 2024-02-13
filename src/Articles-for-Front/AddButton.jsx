@@ -52,13 +52,13 @@ const AddButton = () => {
     }
 
     if (newPost.title.length < 5) {
-      newErrors.title = 'Title must be at least 5 characters.';
+      newErrors.title = '"The minimum length of the title is 5 characters."';
     }
 
     if (newPost.body.length < 5) {
-      newErrors.body = 'Minimum length of body is 5 characters.';
+      newErrors.body = "The minimum length of the body is 5 characters.";
     } else if (newPost.body.length >= 500) {
-      newErrors.body = 'Maximum length of body is 500 characters.';
+      newErrors.body = "The maximum length of the body is 500 characters.";
     }
 
     // Check if there are any errors
@@ -129,6 +129,7 @@ const AddButton = () => {
                             name="userId"
                             value={newPost.userId}
                             onChange={handleFormChange}
+                            required
                           />
                           {errors.userId && (
                             <div className="invalid-feedback">{errors.userId}</div>
@@ -145,6 +146,7 @@ const AddButton = () => {
                             name="title"
                             value={newPost.title}
                             onChange={handleFormChange}
+                            required
                           />
                           {errors.title && (
                             <div className="invalid-feedback">{errors.title}</div>
@@ -160,6 +162,7 @@ const AddButton = () => {
                             name="body"
                             value={newPost.body}
                             onChange={handleFormChange}
+                            required
                           ></textarea>
                           {errors.body && (
                             <div className="invalid-feedback">{errors.body}</div>

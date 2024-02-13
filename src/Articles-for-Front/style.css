@@ -122,3 +122,17 @@
 .buttons{
   margin-left: 100px;
 }
+
+/* edit button  */
+.card-body .edit-button{
+  background-color:#ffcc00;
+  color: white ;
+  border-radius: 10px;
+  border: none;
+  margin-left: 10px;
+  padding: 7px;
+
+}
+.card-body .edit-button:hover{
+  background-color:#dfb715;
+}

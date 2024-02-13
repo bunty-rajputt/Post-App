@@ -4,6 +4,7 @@ import { Nav } from './Articles-for-Front/Nav';
 import { Routes,Route } from 'react-router-dom';
 import Detail from './Articles-for-Front/Detail';
 import AddButton from './Articles-for-Front/AddButton';
+import Edit from './Articles-for-Front/EditPost';
 
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Banner/>}/>
         <Route path='/add' element={<AddButton/>}/>
+        <Route path='/edit/:id' element={<Edit/>}/>
         <Route path="/readmore/:id" element={<Detail />} />
       </Routes>
    
