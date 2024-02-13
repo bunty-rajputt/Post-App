@@ -1,39 +1,49 @@
 import './style.css';
 import Baners from "../Images/Banner.png";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-const REACT_APP_API_KEY = "https://jsonplaceholder.typicode.com/posts";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+
 export const Banner = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
-  const apiKey = process.env.REACT_APP_API_KEY;
-  const [selectedPost, setSelectedPost] = useState()
+  const [selectedPost, setSelectedPost] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(5); // Default posts per page
 
+  const apiUrl = process.env.REACT_APP_API_KEY;
+  console.log(apiUrl)
 
-  // calling data to placeholder through axios
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const result = await axios.get(REACT_APP_API_KEY)
 
-      if (result.status === 200) {
-        const post = result.data;
-        setData(post)
-        setIsLoading(false);
-      } else {
+      try {
+        const result = await axios.get(`https://jsonplaceholder.typicode.com/posts?_page=${currentPage}&_limit=${postsPerPage}`);
+
+        if (result.status === 200) {
+          const posts = result.data;
+          setData(posts);
+        } else {
+          console.error('Error fetching data:', result.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
         setIsLoading(false);
       }
-    }
-    fetchData()
-  }, []);
-  // delete post 
+    };
+
+    fetchData();
+  }, [currentPage, postsPerPage]);
+
   const handleDelete = (id) => {
-    console.log(id, "checkid")
     axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
       .then((response) => {
         console.log('Post deleted successfully', response);
@@ -43,8 +53,17 @@ export const Banner = () => {
       .catch((error) => {
         console.error('Error deleting post', error);
       });
+  };
 
-  }
+  const handleNextPage = () => {
+    setCurrentPage(prevPage => prevPage + 1);
+  };
+
+  const handlePostsPerPageChange = (event) => {
+    setPostsPerPage(event.target.value);
+    setCurrentPage(1); // Reset to first page when changing posts per page
+  };
+
   return (
     <div className='container'>
       <div className='row banner'>
@@ -111,6 +130,20 @@ export const Banner = () => {
           </div>
         </>
       )}
+      <div className='pagination-container'>
+        <Button onClick={handleNextPage} disabled={data.length < postsPerPage} variant="contained" color="primary">
+          Next Page
+        </Button>
+        <Select
+          value={postsPerPage}
+          onChange={handlePostsPerPageChange}
+          label="Posts Per Page"
+        >
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
+          <MenuItem value={20}>20</MenuItem>
+        </Select>
+      </div>
     </div>
   );
 };
