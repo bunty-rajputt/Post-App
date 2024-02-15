@@ -30,7 +30,7 @@ export const Banner = () => {
 
         if (result.status === 200) {
           const posts = result.data;
-          setData((prevData) => [...prevData, ...posts]); // Concatenate new posts to existing data
+          setData(posts); // Concatenate new posts to existing data
         } else {
           console.error('Error fetching data:', result.statusText);
         }
@@ -44,6 +44,7 @@ export const Banner = () => {
     fetchData();
   }, [currentPage, postsPerPage]);
 
+   // hadleDelte function 
   const handleDelete = (id) => {
     axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
       .then((response) => {
@@ -55,11 +56,16 @@ export const Banner = () => {
         console.error('Error deleting post', error);
       });
   };
-
+// handle next button 
   const handleNextPage = () => {
     setCurrentPage(prevPage => prevPage + 1);
   };
 
+// handle previous button 
+  const handlePrevPage = () => {
+    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+  };
+  // select post in dropdown
   const handlePostsPerPageChange = (event) => {
     setPostsPerPage(event.target.value);
     setCurrentPage(1); // Reset to first page when changing posts per page
@@ -93,19 +99,17 @@ export const Banner = () => {
                 <div className="col-md-12">
                   <div className="card my-3 post-list">
                     <div className="card-header">
-                      <h5><span className="card-title">TITLE : </span>{post.title} </h5>
+                      <h5><span className="card-title">postId : <span>{post.id}</span> </span>{post.title} </h5>
                     </div>
                     <div className='card-body'>
                       <p className='card-text'>{post.body}<span className='read-more'><Link to={`/readmore/${post.id}`}>Read More.......</Link></span></p>
-
-
                       {/* Button trigger modal  */}
                       <Button className='delete-btn' onClick={() => setSelectedPost(post.id)} startIcon={<DeleteIcon />} type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Delete
                       </Button>
-                      <Link type='btn' className=' edit-button' to={`/edit/${post.id}`}><Button className='text-white' startIcon={<EditIcon/>}>
-                        Edit Post
-                      </Button></Link>
+                      <Link type='btn' className=' edit-button' to={`/edit/${post.id}`} > 
+                      <EditIcon/> Edit Post
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -136,6 +140,9 @@ export const Banner = () => {
         </>
       )}
       <div className='pagination-container'>
+      <Button onClick={handlePrevPage} disabled={currentPage === 1} variant="contained" color="primary">
+          Prev Page
+        </Button>
         <Button onClick={handleNextPage} disabled={data.length < postsPerPage} variant="contained" color="primary">
           Next Page
         </Button>

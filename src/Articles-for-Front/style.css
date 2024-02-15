@@ -70,13 +70,12 @@
  }
  /* .delete-btn strt here */
  .card-body .delete-btn{
-  background-color: rgb(87, 184, 87);
-  color: white;
+  color: #9a9a9a;
   border-radius: 10px;
   border: none;
  }
  .card-body .delete-btn:hover{
-  background-color: rgb(58, 129, 58);;
+  color: rgb(208, 44, 44);
 }
 /* hover effect on list */
 .post-list:hover{
@@ -125,8 +124,8 @@
 
 /* edit button  */
 .card-body .edit-button{
-  background-color:#ffcc00;
-  color: white ;
+  color: #9a9a9a;
+  text-decoration: none;
   border-radius: 10px;
   border: none;
   margin-left: 10px;
@@ -134,5 +133,5 @@
 
 }
 .card-body .edit-button:hover{
-  background-color:#dfb715;
+  color: rgb(58, 129, 58);
 }
