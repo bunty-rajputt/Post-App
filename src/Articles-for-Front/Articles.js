@@ -29,8 +29,10 @@ export const Banner = () => {
         const result = await axios.get(`https://jsonplaceholder.typicode.com/posts?_page=${currentPage}&_limit=${postsPerPage}`);
 
         if (result.status === 200) {
-          const posts = result.data;
-          setData(posts); // Concatenate new posts to existing data
+          const newPosts = result.data;
+        if ( newPosts.length > 0) {
+          setData((prevPage) => [...prevPage, ...newPosts]); // Concatenate new posts to existing data
+        }
         } else {
           console.error('Error fetching data:', result.statusText);
         }
@@ -59,6 +61,7 @@ export const Banner = () => {
 // handle next button 
   const handleNextPage = () => {
     setCurrentPage(prevPage => prevPage + 1);
+    
   };
 
 // handle previous button 
