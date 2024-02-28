@@ -30,9 +30,8 @@ export const Banner = () => {
 
         if (result.status === 200) {
           const newPosts = result.data;
-        if ( newPosts.length > 0) {
-          setData((prevPage) => [...prevPage, ...newPosts]); // Concatenate new posts to existing data
-        }
+          setData(newPosts); 
+        
         } else {
           console.error('Error fetching data:', result.statusText);
         }
@@ -87,7 +86,6 @@ export const Banner = () => {
       </div>
       <div className='Add'>
         <Link className='add-btn' to={`/add`}><Button style={{ color: "white" }} startIcon={<AddIcon />}>Add Post</Button></Link>
-        {/* Render your existing posts here */}
       </div>
     
       {isLoading ? (<div className="loader-container">
