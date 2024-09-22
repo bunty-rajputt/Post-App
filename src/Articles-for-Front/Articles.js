@@ -16,7 +16,7 @@ export const Banner = () => {
   const [isLoading, setIsLoading] = useState([]);
   const [selectedPost, setSelectedPost] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(5); // Default posts per page
+  const [postsPerPage, setPostsPerPage] = useState(5); 
 
   const apiUrl = process.env.REACT_APP_API_KEY;
   console.log(apiUrl)
